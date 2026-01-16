@@ -244,7 +244,7 @@ async function deleteProjectFromProfile(projectTitle) {
     }
 }
 
-// Auto-check health on load
+// Auto-check health on load (but don't load profile automatically)
 window.addEventListener('load', () => {
     document.getElementById('check-health').click();
 });
