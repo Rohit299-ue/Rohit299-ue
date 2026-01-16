@@ -237,8 +237,8 @@ async function deleteProjectFromProfile(projectTitle) {
         
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         
-        alert('Project removed successfully!');
-        document.getElementById('load-profile').click(); // Reload profile
+        alert('Project removed successfully! Redirecting to profile page...');
+        window.location.href = 'index.html';
     } catch (error) {
         alert(`Error removing project: ${error.message}`);
     }
