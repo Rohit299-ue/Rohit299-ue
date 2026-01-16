@@ -66,23 +66,18 @@ CREATE INDEX IF NOT EXISTS idx_project_skills_skill ON project_skills(skill_id);
 // Seed data - Candidate profile information
 const seedData = {
     profile: {
-        name: "Rohit Rohan Tripathy",
-        email: "rohit.tripathy@example.com",
-        education: "MCA, Bhubaneswar",
+        name: "Your Name",
+        email: "your.email@example.com",
+        education: "Your Education",
         links: {
-            github: "https://github.com/Rohit299-ue",
-            linkedin: "https://www.linkedin.com/in/rohit-rohan-tripathy-07a8ab213",
+            github: "",
+            linkedin: "",
             portfolio: ""
         }
     },
-    skills: ["JavaScript", "Python", "Node.js", "React", "PostgreSQL", "SQLite", "Express", "REST APIs", "Git", "Docker"],
-    work: [
-        "Software Engineer at Tech Corp (2022-Present) - Built scalable APIs",
-        "Intern at StartupXYZ (2021) - Full-stack development"
-    ],
-    projects: [
-        // Empty by default - users will add their own projects
-    ]
+    skills: [],
+    work: [],
+    projects: []
 };
 
 async function initDatabase() {
