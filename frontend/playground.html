@@ -26,7 +26,46 @@
 
             <section id="profile-section">
                 <h2>Profile Management</h2>
-                <button onclick="window.location.href='index.html'">👤 View Profile Page</button>
+                
+                <div style="margin-bottom: 20px;">
+                    <button id="toggle-profile-form">➕ Add/Update Profile</button>
+                    <button onclick="window.location.href='index.html'">👤 View Profile Page</button>
+                </div>
+                
+                <div id="profile-form" style="display: none; padding: 20px; background: #f8f9fa; border-radius: 12px; margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px;">Profile Information</h3>
+                    
+                    <input type="text" id="profile-name" placeholder="Full Name *" style="width: 100%; margin-bottom: 10px;">
+                    <input type="email" id="profile-email" placeholder="Email *" style="width: 100%; margin-bottom: 10px;">
+                    <input type="text" id="profile-education" placeholder="Education (e.g., MCA, Bhubaneswar)" style="width: 100%; margin-bottom: 10px;">
+                    
+                    <h4 style="margin: 15px 0 10px 0;">Links</h4>
+                    <input type="url" id="profile-github" placeholder="GitHub URL" style="width: 100%; margin-bottom: 10px;">
+                    <input type="url" id="profile-linkedin" placeholder="LinkedIn URL" style="width: 100%; margin-bottom: 10px;">
+                    <input type="url" id="profile-portfolio" placeholder="Portfolio URL (optional)" style="width: 100%; margin-bottom: 10px;">
+                    
+                    <h4 style="margin: 15px 0 10px 0;">Skills</h4>
+                    <input type="text" id="profile-skills" placeholder="Skills (comma-separated, e.g., JavaScript, Python, Node.js)" style="width: 100%; margin-bottom: 10px;">
+                    
+                    <h4 style="margin: 15px 0 10px 0;">Work Experience</h4>
+                    <textarea id="profile-work" placeholder="Work experience (one per line)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; min-height: 100px; font-family: inherit;"></textarea>
+                    
+                    <h4 style="margin: 15px 0 10px 0;">Projects</h4>
+                    <div id="projects-container">
+                        <div class="project-input" style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                            <input type="text" class="project-title" placeholder="Project Title" style="width: 100%; margin-bottom: 8px;">
+                            <textarea class="project-description" placeholder="Project Description" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 8px; min-height: 60px; font-family: inherit;"></textarea>
+                            <input type="text" class="project-links" placeholder="Project Links (comma-separated URLs)" style="width: 100%; margin-bottom: 8px;">
+                            <input type="text" class="project-skills" placeholder="Project Skills (comma-separated)" style="width: 100%;">
+                        </div>
+                    </div>
+                    <button id="add-project-field" style="background: #28a745; margin-bottom: 15px;">➕ Add Another Project</button>
+                    
+                    <div>
+                        <button id="save-profile">💾 Save Profile</button>
+                        <button id="cancel-profile-form" style="background: #6c757d;">❌ Cancel</button>
+                    </div>
+                </div>
             </section>
 
             <section id="search-section">

@@ -244,6 +244,109 @@ async function deleteProjectFromProfile(projectTitle) {
     }
 }
 
+// Profile Form Management
+document.getElementById('toggle-profile-form').addEventListener('click', () => {
+    const form = document.getElementById('profile-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+});
+
+document.getElementById('cancel-profile-form').addEventListener('click', () => {
+    document.getElementById('profile-form').style.display = 'none';
+});
+
+document.getElementById('add-project-field').addEventListener('click', () => {
+    const container = document.getElementById('projects-container');
+    const projectDiv = document.createElement('div');
+    projectDiv.className = 'project-input';
+    projectDiv.style.cssText = 'background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; position: relative;';
+    projectDiv.innerHTML = `
+        <button onclick="this.parentElement.remove()" style="position: absolute; top: 10px; right: 10px; background: #dc3545; padding: 4px 8px; font-size: 0.8em;">✕</button>
+        <input type="text" class="project-title" placeholder="Project Title" style="width: 100%; margin-bottom: 8px;">
+        <textarea class="project-description" placeholder="Project Description" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 8px; min-height: 60px; font-family: inherit;"></textarea>
+        <input type="text" class="project-links" placeholder="Project Links (comma-separated URLs)" style="width: 100%; margin-bottom: 8px;">
+        <input type="text" class="project-skills" placeholder="Project Skills (comma-separated)" style="width: 100%;">
+    `;
+    container.appendChild(projectDiv);
+});
+
+document.getElementById('save-profile').addEventListener('click', async () => {
+    const name = document.getElementById('profile-name').value.trim();
+    const email = document.getElementById('profile-email').value.trim();
+    const education = document.getElementById('profile-education').value.trim();
+    const github = document.getElementById('profile-github').value.trim();
+    const linkedin = document.getElementById('profile-linkedin').value.trim();
+    const portfolio = document.getElementById('profile-portfolio').value.trim();
+    const skillsStr = document.getElementById('profile-skills').value.trim();
+    const workStr = document.getElementById('profile-work').value.trim();
+    
+    if (!name || !email) {
+        alert('Name and Email are required!');
+        return;
+    }
+    
+    const skills = skillsStr ? skillsStr.split(',').map(s => s.trim()).filter(s => s) : [];
+    const work = workStr ? workStr.split('\n').map(w => w.trim()).filter(w => w) : [];
+    
+    // Collect projects
+    const projectInputs = document.querySelectorAll('.project-input');
+    const projects = [];
+    projectInputs.forEach(input => {
+        const title = input.querySelector('.project-title').value.trim();
+        if (title) {
+            const description = input.querySelector('.project-description').value.trim();
+            const linksStr = input.querySelector('.project-links').value.trim();
+            const skillsStr = input.querySelector('.project-skills').value.trim();
+            
+            projects.push({
+                title,
+                description,
+                links: linksStr ? linksStr.split(',').map(l => l.trim()).filter(l => l) : [],
+                skills: skillsStr ? skillsStr.split(',').map(s => s.trim()).filter(s => s) : []
+            });
+        }
+    });
+    
+    const profileData = {
+        name,
+        email,
+        education,
+        skills,
+        work,
+        projects,
+        links: {
+            github,
+            linkedin,
+            portfolio
+        }
+    };
+    
+    try {
+        // Try to update first
+        let response = await fetch(`${API_BASE}/profile`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(profileData)
+        });
+        
+        // If profile doesn't exist, create it
+        if (response.status === 404) {
+            response = await fetch(`${API_BASE}/profile`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(profileData)
+            });
+        }
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        alert('Profile saved successfully!');
+        document.getElementById('profile-form').style.display = 'none';
+        window.location.href = 'index.html'; // Redirect to view profile
+    } catch (error) {
+        alert(`Error saving profile: ${error.message}`);
+    }
+});
+
 // Auto-check health on load (but don't load profile automatically)
 window.addEventListener('load', () => {
     document.getElementById('check-health').click();
