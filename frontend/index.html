@@ -3,57 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Me-API Playground</title>
+    <title>Me-API Playground | Rohit Rohan Tripathy</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 </head>
 <body>
-    <header>
-        <h1>Me-API Playground</h1>
-        <p>A personal profile API explorer</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>🚀 Me-API Playground</h1>
+            <p>A personal profile REST API explorer by Rohit Rohan Tripathy</p>
+        </header>
 
-    <main>
-        <section id="health-section">
-            <h2>API Health</h2>
-            <button id="check-health">Check Health</button>
-            <span id="health-status"></span>
-        </section>
+        <main>
+            <section id="health-section">
+                <h2>API Health</h2>
+                <button id="check-health">🔍 Check Health</button>
+                <span id="health-status"></span>
+            </section>
 
-        <section id="profile-section">
-            <h2>Profile</h2>
-            <button id="load-profile">Load Profile</button>
-            <div id="profile-data" class="data-container"></div>
-        </section>
+            <section id="profile-section">
+                <h2>My Profile</h2>
+                <button id="load-profile">👤 Load Profile</button>
+                <div id="profile-data" class="data-container"></div>
+            </section>
 
-        <section id="search-section">
-            <h2>Search</h2>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Search skills, projects, work...">
-                <button id="search-btn">Search</button>
-            </div>
-            <div id="search-results" class="data-container"></div>
-        </section>
+            <section id="search-section">
+                <h2>Search</h2>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="🔎 Search skills, projects, work...">
+                    <button id="search-btn">Search</button>
+                </div>
+                <div id="search-results" class="data-container"></div>
+            </section>
 
-        <section id="projects-section">
-            <h2>Projects</h2>
-            <div class="filter-box">
-                <input type="text" id="skill-filter" placeholder="Filter by skill (e.g., python)">
-                <button id="filter-projects">Filter</button>
-                <button id="load-all-projects">Load All</button>
-            </div>
-            <div id="projects-data" class="data-container"></div>
-        </section>
+            <section id="projects-section">
+                <h2>Projects</h2>
+                <div class="filter-box">
+                    <input type="text" id="skill-filter" placeholder="🏷️ Filter by skill (e.g., python)">
+                    <button id="filter-projects">Filter</button>
+                    <button id="load-all-projects">Load All</button>
+                </div>
+                <div id="projects-data" class="data-container"></div>
+            </section>
 
-        <section id="skills-section">
-            <h2>Top Skills</h2>
-            <button id="load-top-skills">Load Top Skills</button>
-            <div id="skills-data" class="data-container"></div>
-        </section>
-    </main>
+            <section id="skills-section">
+                <h2>Top Skills</h2>
+                <button id="load-top-skills">📊 Load Top Skills</button>
+                <div id="skills-data" class="data-container"></div>
+            </section>
+        </main>
 
-    <footer>
-        <p>Me-API Playground | <a href="#" id="api-docs-link">API Documentation</a></p>
-    </footer>
+        <footer>
+            <p>Built with ❤️ by <a href="https://github.com/Rohit299-ue" target="_blank">Rohit Rohan Tripathy</a></p>
+            <p style="margin-top: 10px; opacity: 0.8;">
+                <a href="https://www.linkedin.com/in/rohit-rohan-tripathy-07a8ab213" target="_blank">LinkedIn</a>
+            </p>
+        </footer>
+    </div>
 
     <script src="app.js"></script>
 </body>
