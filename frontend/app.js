@@ -1,7 +1,7 @@
 // API Base URL - Change this to your deployed backend URL
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:3000'
-    : 'https://rohit299-ue.onrender.com';
+    : 'https://me-api-backend-tuvm.onrender.com';
 
 // Helper function for API calls
 async function apiCall(endpoint) {
