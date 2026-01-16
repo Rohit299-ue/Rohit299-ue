@@ -81,24 +81,7 @@ const seedData = {
         "Intern at StartupXYZ (2021) - Full-stack development"
     ],
     projects: [
-        {
-            title: "Me-API Playground",
-            description: "A full-stack application showcasing REST API development with Node.js, Express, and SQLite",
-            links: ["https://github.com/Rohit299-ue/me-api-playground"],
-            skills: ["JavaScript", "Node.js", "Express", "SQLite", "REST APIs"]
-        },
-        {
-            title: "Task Manager App",
-            description: "A React-based task management application with drag-and-drop functionality",
-            links: ["https://github.com/Rohit299-ue/task-manager"],
-            skills: ["JavaScript", "React", "Node.js"]
-        },
-        {
-            title: "Data Pipeline Tool",
-            description: "Python-based ETL pipeline for processing large datasets",
-            links: ["https://github.com/Rohit299-ue/data-pipeline"],
-            skills: ["Python", "PostgreSQL", "Docker"]
-        }
+        // Empty by default - users will add their own projects
     ]
 };
 
