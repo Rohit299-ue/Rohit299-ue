@@ -70,7 +70,25 @@ function renderProfile(profile) {
             
             <div style="margin-top: 15px;">
                 <h4>Projects (${profile.projects.length})</h4>
-                ${profile.projects.map(renderProject).join('')}
+                ${profile.projects.map(renderProjectWithDelete).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function renderProjectWithDelete(project) {
+    return `
+        <div class="project-card">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <h4>${project.title}</h4>
+                <button onclick="deleteProjectFromProfile('${project.title}')" style="background: #dc3545; padding: 6px 12px; font-size: 0.85em;">🗑️ Remove</button>
+            </div>
+            <p>${project.description || ''}</p>
+            <div>
+                ${project.links?.map(l => `<a href="${l}" target="_blank">View</a>`).join('') || ''}
+            </div>
+            <div>
+                ${project.skills?.map(s => `<span class="skill-tag">${s}</span>`).join('') || ''}
             </div>
         </div>
     `;
@@ -198,6 +216,33 @@ document.getElementById('load-top-skills').addEventListener('click', async () =>
         container.innerHTML = `<p class="error">Error: ${error.message}</p>`;
     }
 });
+
+// Delete Project from Profile
+async function deleteProjectFromProfile(projectTitle) {
+    if (!confirm(`Are you sure you want to remove "${projectTitle}"?`)) return;
+    
+    try {
+        // Get current profile
+        const profile = await apiCall('/profile');
+        
+        // Remove the project
+        const updatedProjects = profile.projects.filter(p => p.title !== projectTitle);
+        
+        // Update profile with remaining projects
+        const response = await fetch(`${API_BASE}/profile`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ projects: updatedProjects })
+        });
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        alert('Project removed successfully!');
+        document.getElementById('load-profile').click(); // Reload profile
+    } catch (error) {
+        alert(`Error removing project: ${error.message}`);
+    }
+}
 
 // Auto-check health on load
 window.addEventListener('load', () => {
