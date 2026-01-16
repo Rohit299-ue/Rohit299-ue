@@ -1,0 +1,11 @@
+# Render Blueprint for deployment
+services:
+  - type: web
+    name: me-api-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_PATH
+        value: /opt/render/project/src/backend/data/meapi.db

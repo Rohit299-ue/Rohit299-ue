@@ -1,0 +1,165 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f5f5f5;
+    color: #333;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #2c3e50;
+    color: white;
+    border-radius: 8px;
+}
+
+header h1 { margin-bottom: 5px; }
+header p { opacity: 0.8; }
+
+section {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+button:hover { background: #2980b9; }
+
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 250px;
+    margin-right: 10px;
+}
+
+.search-box, .filter-box {
+    margin-bottom: 15px;
+}
+
+.data-container {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 4px;
+    min-height: 50px;
+    overflow-x: auto;
+}
+
+.data-container:empty::before {
+    content: "No data loaded";
+    color: #999;
+}
+
+#health-status {
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+#health-status.ok {
+    background: #27ae60;
+    color: white;
+}
+
+#health-status.error {
+    background: #e74c3c;
+    color: white;
+}
+
+.profile-card { padding: 10px 0; }
+.profile-card h3 { color: #2c3e50; margin-bottom: 10px; }
+.profile-card p { margin: 5px 0; }
+
+.skill-tag {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 15px;
+    margin: 3px;
+    font-size: 0.85em;
+}
+
+.project-card {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border-left: 4px solid #3498db;
+}
+
+.project-card h4 { color: #2c3e50; margin-bottom: 5px; }
+.project-card p { color: #666; margin-bottom: 10px; }
+.project-card a { color: #3498db; margin-right: 10px; }
+
+.work-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.links-section a {
+    display: inline-block;
+    margin-right: 15px;
+    color: #3498db;
+}
+
+.search-result-section {
+    margin: 15px 0;
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+}
+
+.search-result-section h4 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.skill-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.skill-stat:last-child { border-bottom: none; }
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+footer a { color: #3498db; }
+
+.error { color: #e74c3c; }
+.loading { color: #999; font-style: italic; }

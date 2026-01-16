@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me-API Playground</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Me-API Playground</h1>
+        <p>A personal profile API explorer</p>
+    </header>
+
+    <main>
+        <section id="health-section">
+            <h2>API Health</h2>
+            <button id="check-health">Check Health</button>
+            <span id="health-status"></span>
+        </section>
+
+        <section id="profile-section">
+            <h2>Profile</h2>
+            <button id="load-profile">Load Profile</button>
+            <div id="profile-data" class="data-container"></div>
+        </section>
+
+        <section id="search-section">
+            <h2>Search</h2>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search skills, projects, work...">
+                <button id="search-btn">Search</button>
+            </div>
+            <div id="search-results" class="data-container"></div>
+        </section>
+
+        <section id="projects-section">
+            <h2>Projects</h2>
+            <div class="filter-box">
+                <input type="text" id="skill-filter" placeholder="Filter by skill (e.g., python)">
+                <button id="filter-projects">Filter</button>
+                <button id="load-all-projects">Load All</button>
+            </div>
+            <div id="projects-data" class="data-container"></div>
+        </section>
+
+        <section id="skills-section">
+            <h2>Top Skills</h2>
+            <button id="load-top-skills">Load Top Skills</button>
+            <div id="skills-data" class="data-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Me-API Playground | <a href="#" id="api-docs-link">API Documentation</a></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
