@@ -211,8 +211,8 @@ Render's free tier uses ephemeral storage. The database file is lost on redeploy
 | Resource | URL |
 |----------|-----|
 | Backend API | https://me-api-backend-tuvm.onrender.com |
-| Frontend | *Deploy to Vercel/Netlify* |
-| Source Code | https://github.com/Rohit299-ue/me-api-playground |
+| Frontend | https://hilarious-shortbread-0497ea.netlify.app |
+| Source Code | https://github.com/Rohit299-ue/Rohit299-ue |
 | Resume/LinkedIn | https://www.linkedin.com/in/rohit-rohan-tripathy-07a8ab213 |
 
 ## Author
