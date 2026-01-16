@@ -79,7 +79,10 @@ function renderProfile(profile) {
 function renderProject(project) {
     return `
         <div class="project-card">
-            <h4>${project.title}</h4>
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <h4>${project.title}</h4>
+                ${project.id ? `<button onclick="deleteProject(${project.id})" style="background: #dc3545; padding: 6px 12px; font-size: 0.85em;">🗑️ Delete</button>` : ''}
+            </div>
             <p>${project.description || ''}</p>
             <div>
                 ${project.links?.map(l => `<a href="${l}" target="_blank">View</a>`).join('') || ''}
@@ -198,6 +201,73 @@ document.getElementById('load-top-skills').addEventListener('click', async () =>
         container.innerHTML = `<p class="error">Error: ${error.message}</p>`;
     }
 });
+
+// Add Project Form
+document.getElementById('show-add-project').addEventListener('click', () => {
+    document.getElementById('add-project-form').style.display = 'block';
+});
+
+document.getElementById('cancel-project').addEventListener('click', () => {
+    document.getElementById('add-project-form').style.display = 'none';
+    clearProjectForm();
+});
+
+document.getElementById('submit-project').addEventListener('click', async () => {
+    const title = document.getElementById('project-title').value.trim();
+    const description = document.getElementById('project-description').value.trim();
+    const linksStr = document.getElementById('project-links').value.trim();
+    const skillsStr = document.getElementById('project-skills').value.trim();
+    
+    if (!title) {
+        alert('Project title is required');
+        return;
+    }
+    
+    const links = linksStr ? linksStr.split(',').map(l => l.trim()).filter(l => l) : [];
+    const skills = skillsStr ? skillsStr.split(',').map(s => s.trim()).filter(s => s) : [];
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/projects`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, description, links, skills })
+        });
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        alert('Project added successfully!');
+        document.getElementById('add-project-form').style.display = 'none';
+        clearProjectForm();
+        loadProjects(false); // Reload all projects
+    } catch (error) {
+        alert(`Error adding project: ${error.message}`);
+    }
+});
+
+function clearProjectForm() {
+    document.getElementById('project-title').value = '';
+    document.getElementById('project-description').value = '';
+    document.getElementById('project-links').value = '';
+    document.getElementById('project-skills').value = '';
+}
+
+// Delete Project
+async function deleteProject(projectId) {
+    if (!confirm('Are you sure you want to delete this project?')) return;
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/projects/${projectId}`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        alert('Project deleted successfully!');
+        loadProjects(false); // Reload all projects
+    } catch (error) {
+        alert(`Error deleting project: ${error.message}`);
+    }
+}
 
 // Auto-check health on load
 window.addEventListener('load', () => {

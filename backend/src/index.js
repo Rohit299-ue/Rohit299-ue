@@ -26,8 +26,10 @@ initDatabase().then(() => {
     // Routes (loaded after DB init)
     const profileRoutes = require('./routes/profile');
     const queryRoutes = require('./routes/query');
+    const projectRoutes = require('./routes/projects');
     
     app.use('/profile', profileRoutes);
+    app.use('/api/projects', projectRoutes);
     app.use('/', queryRoutes);
 
     // 404 handler
