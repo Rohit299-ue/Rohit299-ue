@@ -3,53 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Me-API Playground | Rohit Rohan Tripathy</title>
+    <title>Rohit Rohan Tripathy | Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🚀 Me-API Playground</h1>
-            <p>A personal profile REST API explorer by Rohit Rohan Tripathy</p>
+            <h1>👨‍💻 Rohit Rohan Tripathy</h1>
+            <p>MCA Student | Full-Stack Developer</p>
+            <div style="margin-top: 15px;">
+                <a href="playground.html" style="color: white; background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 500;">🚀 API Playground</a>
+            </div>
         </header>
 
         <main>
-            <section id="health-section">
-                <h2>API Health</h2>
-                <button id="check-health">🔍 Check Health</button>
-                <span id="health-status"></span>
-            </section>
-
             <section id="profile-section">
-                <h2>My Profile</h2>
-                <button id="load-profile">👤 Load Profile</button>
-                <div id="profile-data" class="data-container"></div>
-            </section>
-
-            <section id="search-section">
-                <h2>Search</h2>
-                <div class="search-box">
-                    <input type="text" id="search-input" placeholder="🔎 Search skills, projects, work...">
-                    <button id="search-btn">Search</button>
+                <div id="profile-data" class="data-container">
+                    <p class="loading">Loading profile...</p>
                 </div>
-                <div id="search-results" class="data-container"></div>
-            </section>
-
-            <section id="projects-section">
-                <h2>Projects</h2>
-                <div class="filter-box">
-                    <input type="text" id="skill-filter" placeholder="🏷️ Filter by skill (e.g., python)">
-                    <button id="filter-projects">Filter</button>
-                    <button id="load-all-projects">Load All</button>
-                </div>
-                <div id="projects-data" class="data-container"></div>
-            </section>
-
-            <section id="skills-section">
-                <h2>Top Skills</h2>
-                <button id="load-top-skills">📊 Load Top Skills</button>
-                <div id="skills-data" class="data-container"></div>
             </section>
         </main>
 
@@ -61,6 +33,79 @@
         </footer>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://me-api-backend-tuvm.onrender.com';
+
+        async function apiCall(endpoint) {
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        function renderProfile(profile) {
+            return `
+                <div class="profile-card">
+                    <h3>${profile.name}</h3>
+                    <p><strong>Email:</strong> ${profile.email}</p>
+                    <p><strong>Education:</strong> ${profile.education || 'N/A'}</p>
+                    
+                    <div class="links-section">
+                        <h4>Links</h4>
+                        ${profile.links.github ? `<a href="${profile.links.github}" target="_blank">GitHub</a>` : ''}
+                        ${profile.links.linkedin ? `<a href="${profile.links.linkedin}" target="_blank">LinkedIn</a>` : ''}
+                        ${profile.links.portfolio ? `<a href="${profile.links.portfolio}" target="_blank">Portfolio</a>` : ''}
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <h4>Skills</h4>
+                        ${profile.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <h4>Work Experience</h4>
+                        ${profile.work.map(w => `<div class="work-item">${w}</div>`).join('')}
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <h4>Projects (${profile.projects.length})</h4>
+                        ${profile.projects.map(renderProject).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProject(project) {
+            return `
+                <div class="project-card">
+                    <h4>${project.title}</h4>
+                    <p>${project.description || ''}</p>
+                    <div>
+                        ${project.links?.map(l => `<a href="${l}" target="_blank">View</a>`).join('') || ''}
+                    </div>
+                    <div>
+                        ${project.skills?.map(s => `<span class="skill-tag">${s}</span>`).join('') || ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Auto-load profile on page load
+        window.addEventListener('load', async () => {
+            const container = document.getElementById('profile-data');
+            try {
+                const profile = await apiCall('/profile');
+                container.innerHTML = renderProfile(profile);
+            } catch (error) {
+                container.innerHTML = `<p class="error">Error loading profile: ${error.message}</p>`;
+            }
+        });
+    </script>
 </body>
 </html>
