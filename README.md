@@ -150,6 +150,17 @@ curl -X POST http://localhost:3000/profile \
     "email": "rohit@example.com",
     "education": "MCA, Bhubaneswar",
     "skills": ["JavaScript", "Python", "Node.js"],
+    "projects": [
+      {
+        "title": "My Project",
+        "description": "Project description",
+        "links": ["https://github.com/username/project"],
+        "skills": ["JavaScript", "Node.js"]
+      }
+    ],
+    "work": [
+      "Software Engineer at Company (2022-Present)"
+    ],
     "links": {
       "github": "https://github.com/Rohit299-ue",
       "linkedin": "https://linkedin.com/in/rohit-rohan-tripathy-07a8ab213"
@@ -180,6 +191,90 @@ curl http://localhost:3000/skills/top
 curl "http://localhost:3000/search?q=api"
 # Returns matching skills, projects, and work entries
 ```
+
+## User Manual
+
+### How to Use the Frontend
+
+1. **Open the Application**
+   - Visit: https://hilarious-shortbread-0497ea.netlify.app
+   - The health check runs automatically on page load
+
+2. **View Profile**
+   - Click "👤 Load Profile" to see complete profile information
+   - Displays: Name, Email, Education, Skills, Work Experience, Projects, and Links
+
+3. **Search**
+   - Enter keywords in the search box (e.g., "python", "api", "engineer")
+   - Press Enter or click "Search"
+   - Results are categorized by Skills, Projects, and Work Experience
+
+4. **Filter Projects**
+   - Enter a skill name in the filter box (e.g., "python", "javascript")
+   - Click "Filter" to see only projects using that skill
+   - Click "Load All" to see all projects again
+
+5. **View Top Skills**
+   - Click "📊 Load Top Skills"
+   - Shows skills ranked by number of projects using them
+
+### How to Update Your Profile Data
+
+**Option 1: Update Seed Data (Recommended)**
+
+1. Edit `backend/src/db/database.js`
+2. Update the `seedData` object with your information:
+   ```javascript
+   const seedData = {
+       profile: {
+           name: "Your Name",
+           email: "your.email@example.com",
+           education: "Your Education",
+           links: {
+               github: "https://github.com/yourusername",
+               linkedin: "https://linkedin.com/in/yourusername",
+               portfolio: "https://yoursite.com"
+           }
+       },
+       skills: ["Skill1", "Skill2", "Skill3"],
+       work: ["Job description 1", "Job description 2"],
+       projects: [
+           {
+               title: "Project Name",
+               description: "Project description",
+               links: ["https://github.com/yourusername/project"],
+               skills: ["Skill1", "Skill2"]
+           }
+       ]
+   };
+   ```
+3. Delete the database file: `backend/data/meapi.db`
+4. Restart the server: `npm start`
+5. Push changes to GitHub and redeploy
+
+**Option 2: Use API Endpoints**
+
+Update profile via PUT request:
+```bash
+curl -X PUT https://me-api-backend-tuvm.onrender.com/profile \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Updated Name",
+    "education": "Updated Education",
+    "skills": ["New", "Skills", "List"],
+    "work": ["Updated work experience"],
+    "projects": [
+      {
+        "title": "New Project",
+        "description": "Description",
+        "links": ["https://github.com/username/project"],
+        "skills": ["JavaScript"]
+      }
+    ]
+  }'
+```
+
+**Note:** On Render's free tier, database changes via API are lost on redeploy. Use Option 1 for permanent changes.
 
 ## Technical Decisions
 
