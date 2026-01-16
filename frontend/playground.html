@@ -142,9 +142,9 @@
             const skills = skillsStr ? skillsStr.split(',').map(s => s.trim()).filter(s => s) : [];
             const work = workStr ? workStr.split('\n').map(w => w.trim()).filter(w => w) : [];
             
-            // Collect projects
+            // Collect NEW projects from form
             const projectInputs = document.querySelectorAll('.project-input');
-            const projects = [];
+            const newProjects = [];
             projectInputs.forEach(input => {
                 const title = input.querySelector('.project-title').value.trim();
                 if (title) {
@@ -152,7 +152,7 @@
                     const linksStr = input.querySelector('.project-links').value.trim();
                     const skillsStr = input.querySelector('.project-skills').value.trim();
                     
-                    projects.push({
+                    newProjects.push({
                         title,
                         description,
                         links: linksStr ? linksStr.split(',').map(l => l.trim()).filter(l => l) : [],
@@ -161,21 +161,36 @@
                 }
             });
             
-            const profileData = {
-                name,
-                email,
-                education,
-                skills,
-                work,
-                projects,
-                links: {
-                    github,
-                    linkedin,
-                    portfolio
-                }
-            };
-            
             try {
+                // Get existing profile to merge projects
+                let existingProjects = [];
+                try {
+                    const response = await fetch(`${API_BASE}/profile`);
+                    if (response.ok) {
+                        const existingProfile = await response.json();
+                        existingProjects = existingProfile.projects || [];
+                    }
+                } catch (e) {
+                    console.log('No existing profile, creating new one');
+                }
+                
+                // Merge: keep existing projects + add new ones
+                const allProjects = [...existingProjects, ...newProjects];
+                
+                const profileData = {
+                    name,
+                    email,
+                    education,
+                    skills,
+                    work,
+                    projects: allProjects,
+                    links: {
+                        github,
+                        linkedin,
+                        portfolio
+                    }
+                };
+                
                 // Try to update first
                 let response = await fetch(`${API_BASE}/profile`, {
                     method: 'PUT',
@@ -197,7 +212,7 @@
                     throw new Error(error.error || `HTTP ${response.status}`);
                 }
                 
-                alert('Profile saved successfully! Redirecting to profile page...');
+                alert('Profile saved successfully! New projects added. Redirecting...');
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 500);
