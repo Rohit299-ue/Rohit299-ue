@@ -10,8 +10,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>👨‍💻 Rohit Rohan Tripathy</h1>
-            <p>MCA Student | Full-Stack Developer</p>
+            <h1 id="header-name">👨‍💻 Loading...</h1>
+            <p id="header-subtitle">Please wait...</p>
             <div style="margin-top: 15px;">
                 <a href="playground.html" style="color: white; background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 500;">🚀 API Playground</a>
             </div>
@@ -99,11 +99,20 @@
         // Auto-load profile on page load
         window.addEventListener('load', async () => {
             const container = document.getElementById('profile-data');
+            const headerName = document.getElementById('header-name');
+            const headerSubtitle = document.getElementById('header-subtitle');
+            
             try {
                 const profile = await apiCall('/profile');
                 container.innerHTML = renderProfile(profile);
+                
+                // Update header with user data
+                headerName.textContent = `👨‍💻 ${profile.name}`;
+                headerSubtitle.textContent = profile.education || 'Developer';
             } catch (error) {
                 container.innerHTML = `<p class="error">Error loading profile: ${error.message}</p>`;
+                headerName.textContent = '👨‍💻 No Profile Found';
+                headerSubtitle.textContent = 'Please create your profile in the API Playground';
             }
         });
     </script>
