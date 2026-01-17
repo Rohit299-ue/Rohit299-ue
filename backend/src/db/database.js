@@ -98,42 +98,15 @@ async function initDatabase() {
 }
 
 function seedDatabase() {
-    // Insert profile
-    db.run(`INSERT INTO profile (id, name, email, education, links_github, links_linkedin, links_portfolio)
-            VALUES (1, ?, ?, ?, ?, ?, ?)`,
-        [seedData.profile.name, seedData.profile.email, seedData.profile.education,
-         seedData.profile.links.github, seedData.profile.links.linkedin, seedData.profile.links.portfolio]);
-
-    // Insert skills
-    seedData.skills.forEach(skill => {
-        db.run('INSERT OR IGNORE INTO skills (name) VALUES (?)', [skill]);
-    });
-
-    // Insert work
-    seedData.work.forEach((w, i) => {
-        db.run('INSERT INTO work (description, sort_order) VALUES (?, ?)', [w, i]);
-    });
-
-    // Insert projects
-    seedData.projects.forEach(project => {
-        db.run('INSERT INTO projects (title, description) VALUES (?, ?)', [project.title, project.description]);
-        const projectId = db.exec('SELECT last_insert_rowid() as id')[0].values[0][0];
-        
-        project.links.forEach(link => {
-            db.run('INSERT INTO project_links (project_id, url) VALUES (?, ?)', [projectId, link]);
-        });
-        
-        project.skills.forEach(skillName => {
-            db.run('INSERT OR IGNORE INTO skills (name) VALUES (?)', [skillName]);
-            const skillResult = db.exec('SELECT id FROM skills WHERE name = ?', [skillName]);
-            if (skillResult.length && skillResult[0].values.length) {
-                const skillId = skillResult[0].values[0][0];
-                db.run('INSERT OR IGNORE INTO project_skills (project_id, skill_id) VALUES (?, ?)', [projectId, skillId]);
-            }
-        });
-    });
+    // Only seed if no profile exists - let users create their own profile
+    const existingProfile = db.exec('SELECT id FROM profile WHERE id = 1');
+    if (existingProfile.length && existingProfile[0].values.length) {
+        console.log('Profile already exists, skipping seed');
+        return;
+    }
     
-    console.log('Database seeded successfully!');
+    console.log('No profile found - users must create their own profile');
+    // Don't seed any data - completely empty database
 }
 
 function saveDatabase() {
