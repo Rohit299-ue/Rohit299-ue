@@ -110,9 +110,16 @@
                 headerName.textContent = `👨‍💻 ${profile.name}`;
                 headerSubtitle.textContent = profile.education || 'Developer';
             } catch (error) {
-                container.innerHTML = `<p class="error">Error loading profile: ${error.message}</p>`;
-                headerName.textContent = '👨‍💻 No Profile Found';
-                headerSubtitle.textContent = 'Please create your profile in the API Playground';
+                // Show friendly message instead of error
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <h3 style="margin-bottom: 15px;">👋 Welcome!</h3>
+                        <p style="margin-bottom: 20px;">No profile found. Create your profile to get started.</p>
+                        <a href="playground.html" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">🚀 Create Profile</a>
+                    </div>
+                `;
+                headerName.textContent = '👨‍💻 Welcome';
+                headerSubtitle.textContent = 'Create your profile to get started';
             }
         });
     </script>
